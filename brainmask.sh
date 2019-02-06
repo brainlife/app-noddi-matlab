@@ -1,21 +1,23 @@
 #!/bin/bash
 
 dwi=`jq -r '.dwi' config.json`;
-bvals=`jq -r '.dwi' config.json`;
-bvecs=`jq -r '.dwi' config.json`;
+bvals=`jq -r '.bvals' config.json`;
+bvecs=`jq -r '.bvecs' config.json`;
 doadvance=`jq -r '.advancedMask' config.json`;
 otherMask=`jq -r '.mask' config.json`;
 
-gunzip ${dwi} ./dwi.nii;
+cp -v ${dwi} ./dwi.nii.gz
+gunzip dwi.nii.gz ./dwi.nii;
 
 if [ -f $otherMask ];then
-	gunzip ${otherMask} ./mask.nii;
+	cp -v ${otherMask} ./mask.nii.gz;
+	gunzip ./mask.nii.gz; ./mask.nii;
 else
 
 	if [ -f nodif.nii.gz ];then
 		echo "b0 exists. skipping"
 	else
-		"create b0 image"
+		echo "create b0 image"
 		# Create b0
 		select_dwi_vols \
 			${dwi} \
@@ -47,6 +49,8 @@ fi
 if [ -f mask.nii ];then
 	echo "brainmask and gunzip completed"
 	rm -rf *nodif*
+	mask.nii.gz
+	dwi.nii.gz
 else
 	echo "output missing"
 	exit 1
