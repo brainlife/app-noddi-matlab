@@ -7,11 +7,10 @@ doadvance=`jq -r '.advancedMask' config.json`;
 otherMask=`jq -r '.mask' config.json`;
 
 cp -v ${dwi} ./dwi.nii.gz
-gunzip dwi.nii.gz ./dwi.nii;
 
 if [ -f $otherMask ];then
 	cp -v ${otherMask} ./mask.nii.gz;
-	gunzip ./mask.nii.gz; ./mask.nii;
+	gunzip ./mask.nii.gz;
 else
 
 	if [ -f nodif.nii.gz ];then
@@ -20,7 +19,7 @@ else
 		echo "create b0 image"
 		# Create b0
 		select_dwi_vols \
-			${dwi} \
+			dwi.nii.gz \
 			${bvals} \
 			nodif.nii.gz \
 			0;
@@ -42,15 +41,16 @@ else
 		fslmaths ${otherMask} -mul nodif_brain_mask.nii.gz nodif_brain_mask.nii.gz
 	fi
 
-	gunzip nodif_brain_mask.nii.gz mask.nii;
-	gunzip nodif_brain.nii.gz brain_extracted.nii;
+	gunzip nodif_brain_mask.nii.gz;
+	gunzip nodif_brain.nii.gz;
 fi
 
+gunzip dwi.nii.gz;
+mv nodif_brain_mask.nii mask.nii
+mv nodif_brain.nii brain_extracted.nii
 if [ -f mask.nii ];then
 	echo "brainmask and gunzip completed"
 	rm -rf *nodif*
-	mask.nii.gz
-	dwi.nii.gz
 else
 	echo "output missing"
 	exit 1

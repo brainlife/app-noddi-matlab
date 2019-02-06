@@ -8,7 +8,7 @@ set -e
 time singularity exec -e docker://brainlife/fsl:5.0.9 ./brainmask.sh
 
 # run noddi_matlab
-time singularity exec -e docker://brainlife/mcr:neurodebian1604-r2017a ./compiled/nodi_matlab
+time singularity exec -e docker://brainlife/mcr:neurodebian1604-r2017a ./compiled/noddi_matlab
 
 # cleanup and error check
 if [ -f nodif_fit_ficvf.nii ];then
@@ -16,9 +16,9 @@ if [ -f nodif_fit_ficvf.nii ];then
 	mv noddi_fit_ficvf.nii ./noddi/icvf.nii;
 	mv noddi_fit_fiso.nii ./noddi/isovf.nii;
 	mv noddi_fit_fodi.nii ./noddi/od.nii;
-	gzip ./noddi/icvf.nii ./noddi/icvf.nii.gz;
-	gzip ./noddi/isovf.nii ./noddi/isovf.nii.gz;
-	gzip ./noddi/od.nii ./noddi/od.nii.gz;
+	gzip ./noddi/icvf.nii;
+	gzip ./noddi/isovf.nii;
+	gzip ./noddi/od.nii;
 #	gzip mask.nii;
 #	rm -rf *noddi_fit*;
 else
