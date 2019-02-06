@@ -40,3 +40,5 @@ batch_fitting('NODDI_roi.mat',protocol,noddi,'FittedParams.mat',16);
 display("save noddi files")
 SaveParamsAsNifti('FittedParams.mat','NODDI_roi.mat',mask,'noddi_fit');
 
+exit;
+end
