@@ -15,8 +15,12 @@ bvecs = fullfile(config.bvecs);
 mask = 'mask.nii';
 
 % create ROI
-display("creating ROI")
-CreateROI(dwi,mask,'NODDI_roi.mat');
+if exist('NODDI_roi.mat','file') == 2
+	display("ROI file exists. skipping")
+else
+	display("creating ROI")
+	CreateROI(dwi,mask,'NODDI_roi.mat');
+end
 
 % create protocol
 display("creating protocol")
@@ -27,8 +31,12 @@ display("initialize noddi")
 noddi = MakeModel('WatsonSHStickTortIsoV_B0');
 
 % batch fitt noddi model
-display("batch fit noddi")
-batch_fitting('NODDI_roi.mat',protocol,noddi,'FittedParams.mat',16);
+if exist('FittedParams.mat','file') == 2
+	display("Fitted Params file exists. skipping noddi fit")
+else
+	display("batch fit noddi")
+	batch_fitting('NODDI_roi.mat',protocol,noddi,'FittedParams.mat',16);
+end
 
 % save noddi files
 display("save noddi files")
