@@ -6,7 +6,12 @@ bvecs=`jq -r '.bvecs' config.json`;
 doadvance=`jq -r '.advancedMask' config.json`;
 otherMask=`jq -r '.mask' config.json`;
 
-cp -v ${dwi} ./dwi.nii.gz
+if [ -f dwi.nii ];
+then
+	echo "uncompressed dwi already here. skipping"
+else
+	cp -v ${dwi} ./dwi.nii.gz
+fi
 
 if [ -f $otherMask ];then
 	cp -v ${otherMask} ./mask.nii.gz;
@@ -45,9 +50,19 @@ else
 	gunzip nodif_brain.nii.gz;
 fi
 
-gunzip dwi.nii.gz;
-mv nodif_brain_mask.nii mask.nii
-mv nodif_brain.nii brain_extracted.nii
+if [ -f dwi.nii ];then
+	echo "dwi unzipped already. skipping"
+else
+	gunzip dwi.nii.gz;
+fi
+
+if [ -f mask.nii ];then
+	echo "mask created and unzipped already. skipping"
+else
+	mv nodif_brain_mask.nii mask.nii
+	mv nodif_brain.nii brain_extracted.nii
+fi
+
 if [ -f mask.nii ];then
 	echo "brainmask and gunzip completed"
 	rm -rf *nodif*
