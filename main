@@ -15,7 +15,7 @@ if [ -f noddi_fit_ficvf.nii ];then
 	mkdir noddi;
 	mv noddi_fit_ficvf.nii ./noddi/icvf.nii;
 	mv noddi_fit_fiso.nii ./noddi/isovf.nii;
-	mv noddi_fit_fodi.nii ./noddi/od.nii;
+	mv noddi_fit_odi.nii ./noddi/od.nii;
 	gzip ./noddi/icvf.nii;
 	gzip ./noddi/isovf.nii;
 	gzip ./noddi/od.nii;
