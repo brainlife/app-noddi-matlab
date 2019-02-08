@@ -11,7 +11,7 @@ time singularity exec -e docker://brainlife/fsl:5.0.9 ./brainmask.sh
 time singularity exec -e docker://brainlife/mcr:neurodebian1604-r2017a ./compiled/noddi_matlab
 
 # cleanup and error check
-if [ -f nodif_fit_ficvf.nii ];then
+if [ -f noddi_fit_ficvf.nii ];then
 	mkdir noddi;
 	mv noddi_fit_ficvf.nii ./noddi/icvf.nii;
 	mv noddi_fit_fiso.nii ./noddi/isovf.nii;
