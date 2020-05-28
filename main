@@ -13,12 +13,12 @@ time singularity exec -e docker://brainlife/mcr:neurodebian1604-r2017a ./compile
 # cleanup and error check
 if [ -f noddi_fit_ficvf.nii ];then
 	mkdir noddi;
-	mv noddi_fit_ficvf.nii ./noddi/icvf.nii;
+	mv noddi_fit_ficvf.nii ./noddi/ndi.nii;
 	mv noddi_fit_fiso.nii ./noddi/isovf.nii;
-	mv noddi_fit_odi.nii ./noddi/od.nii;
-	gzip ./noddi/icvf.nii;
+	mv noddi_fit_odi.nii ./noddi/odi.nii;
+	gzip ./noddi/ndi.nii;
 	gzip ./noddi/isovf.nii;
-	gzip ./noddi/od.nii;
+	gzip ./noddi/odi.nii;
 #	gzip mask.nii;
 #	rm -rf *noddi_fit*;
 else
